@@ -69,7 +69,7 @@ cifuzz create cpp --output test/test1.cpp
 
 ### Task 1.3 - Run fuzzer with empty test case
 
-![Task1A image](../img/Lab2:Task1C.png)
+![Task1A image](../img/Lab2_Task1C.png)
 
 - Command used to run the fuzzer
 
@@ -107,7 +107,7 @@ FUZZ_TEST(const uint8_t *data, size_t size) {
 ```
 Screenshot of the fz test file
 
-![Task2A image](../img/Lab2:Task2A.png)
+![Task2A image](../img/Lab2_Task2A.png)
 
 ### Task 2.2 - Update main
 
@@ -116,7 +116,7 @@ I have wrote 26 test cases to cover all the if-else branched in calculator funct
 - Enough for the scope of the project?
  No. Since I haven't consider floating point numbers(because the calculator only works with integer) for calculator these test cases are not enough to cover the project. So, to enable and add those tests as well we need to modify the calculator function in order. But other than that these test cases covers the all the branches in the code.
 
-![Task2B image](../img/Lab2:Task2B.png)
+![Task2B image](../img/Lab2_Task2B.png)
 
 ### Task 2.3 - Run the fuzzer
 
@@ -129,7 +129,7 @@ cifuzz run test1
 
 I could not find any bugs after trying for several hours and different ways/configurations. I have contacted this with Lab Assistant too. My setup and ocnfiguration is inline but fuzing doesn't find any bugs. Below attached a screenshot. I am using mac m1 (ARM) to run this.
 
-![Task1A image](../img/Lab2:Task2C-old.png)
+![Task1A image](../img/Lab2_Task2C-old.png)
 
 But adding the below two lines to the calculator.cpp found a bug which is expected. This was done catch the expected bug and to check if something else broken or not inline. 
 ```cpp
@@ -139,7 +139,7 @@ n >>= 73;
 
 It throws a RUNTIME_ERROR on ```undefined-behavior```: shift exponent 73 is too large for 32-bit type 'int'.
 Below attached a screenshot of the finding.
-![Task1A image](../img/Lab2:Task2C.png)
+![Task1A image](../img/Lab2_Task2C.png)
 
 ### Task 2.4 - Generate a code-coverage report and write a brief summary about what it represents
 
@@ -149,8 +149,8 @@ Below attached a screenshot of the finding.
 cifuzz coverage test1
 ```
 - Screenshots of the coverage reports
-![Task2D-1 image](../img/Lab2:Task2D-1.png)
-![Task2D-2 image](../img/Lab2:Task2D-2.png)
+![Task2D-1 image](../img/Lab2_Task2D-1.png)
+![Task2D-2 image](../img/Lab2_Task2D-2.png)
 
 
 - Summary of the coverage report
@@ -162,15 +162,15 @@ The coverage report shows that the fuzzer has covered almost all the functionali
 
 Bug dicovered named ```undefined behavior: shift exponent 73 is too large for 32-bit type 'int'```. This happens because from ```n <<= 73``` it tries to shift bits to left by 73. 'int' typically has 32 bits in most C and C++ implementations. Shifting by 73 bits is not defined for a 32-bit 'int' because it exceeds the valid range. Hence, this raises a bug. Below attached a screenshot.
 
-![Task3A image](../img/Lab2:Task3A.png)
+![Task3A image](../img/Lab2_Task3A.png)
 
 ### Task 3.2 - Design a fuzzer job
 
 I have implemented this one in this [repo](https://github.com/SoftwareHardwareSecurity-2023/software-and-hardware-security-submissions-waasnipun). This will automatically trigger the build of the Docker image and containerize the application and runs it. It will generate the ```cifuzz finding``` and the ```cifuzz coverage``` too at the end. Below attached the screenshots of the all results and fuzzing summary. It is catching a ```undefined behaviour``` bug in the ```calculator.cpp``` file. This is due to the bit shifting implemented in the calculator fundtion (```n <<= 73;```).
 
-![Task3B image](../img/Lab2:Task3B-1.png)
+![Task3B image](../img/Lab2_Task3B-1.png)
 
-![Task3B image](../img/Lab2:Task3B-2.png)
+![Task3B image](../img/Lab2_Task3B-2.png)
 
 I have edited the Dockerfile to get the files from local directory and not from a remote repo(instructed by the comments). Also, wrote a pipeline using github workflow to automate the Dockerfile building into a container and running it. 
 
@@ -216,8 +216,8 @@ For this task I have chosed a password strength checker cpp project which I foun
 
 The automated pipeline is well designed. It stores the fuzzing logs and upload them into the github artifact. For each workflow, it will upload the log file to the artifact and there you can find the detected bugs and the reports of coverage. Below attached a workflow dashboard and the workflow file.
 
-![Task4 image](../img/Lab2:Task4.png)
-![Task4 image](../img/Lab2:Task4-1.png)
+![Task4 image](../img/Lab2_Task4.png)
+![Task4 image](../img/Lab2_Task4-1.png)
 ```yaml
 name: PassStrength Workflow - Nipun Waas
 run-name: ${{ github.actor }} is testing out cifuzz CI/CD 🚀
@@ -261,6 +261,6 @@ jobs:
 ```
 Below attached a screenshot of the logs results. The checker code has been very well written and I couldn't find any vulanarability within the given time :( . Apart from that the pipeline and the integration of the fuzz automation into a software was achieved successfully. 
 
-![Task4 image](../img/Lab2:Task4-2.png)
+![Task4 image](../img/Lab2_Task4-2.png)
 
 Cheers !!
