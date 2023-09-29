@@ -1,0 +1,15 @@
+load("@rules_fuzzing//fuzzing:cc_defs.bzl", "cc_fuzz_test")
+
+cc_fuzz_test(
+    name = "test",
+    srcs = ["test.cpp"],
+    corpus = glob(
+        ["my_fuzz_test_inputs/**"],
+        allow_empty = True,
+    ),
+    deps = [
+      "//src:ProjectX",
+      "@cifuzz"
+    ],
+)
+
