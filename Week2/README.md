@@ -55,7 +55,7 @@ cd build
 cmake ..
 ```
 
-![Task1A image](../img/Lab2:Task1A.png)
+![Task1A image](../img/Lab2_Task1A.png)
 
 ### Task 1.2 - Create an empty fuzz test template file
 
